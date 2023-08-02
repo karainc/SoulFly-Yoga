@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server-yoga", "server-yoga\server-yoga.csproj", "{66E7B0D3-FA09-4A1A-88F1-B352A9C538DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server-yoga", "server-yoga\server-yoga.csproj", "{2F6EA687-C95F-4C9F-831A-EC18E5BB25FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{66E7B0D3-FA09-4A1A-88F1-B352A9C538DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66E7B0D3-FA09-4A1A-88F1-B352A9C538DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66E7B0D3-FA09-4A1A-88F1-B352A9C538DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66E7B0D3-FA09-4A1A-88F1-B352A9C538DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F6EA687-C95F-4C9F-831A-EC18E5BB25FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F6EA687-C95F-4C9F-831A-EC18E5BB25FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F6EA687-C95F-4C9F-831A-EC18E5BB25FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F6EA687-C95F-4C9F-831A-EC18E5BB25FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {513D06B7-DF11-482A-A6D8-6293F8AB6D58}
+		SolutionGuid = {B1469799-7116-4501-AEAA-91C11A0280A5}
 	EndGlobalSection
 EndGlobal

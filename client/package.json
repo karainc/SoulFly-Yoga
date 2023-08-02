@@ -1,5 +1,6 @@
 {
   "name": "soulfly-test",
+   "proxy": "https://localhost:7145",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
