@@ -18,6 +18,8 @@ namespace server_yoga.Models
         public DateTime CreationDate { get; set; }
 
         public string? Reflection { get; set; }
-
+        public Poses Poses { get; internal set; }
+        public int UsersId { get; internal set; }
+        public Users Users { get; internal set; }
     }
 }

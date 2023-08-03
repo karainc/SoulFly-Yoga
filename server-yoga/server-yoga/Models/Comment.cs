@@ -14,5 +14,9 @@ namespace server_yoga.Models
         public int UsersId { get; set; }
 
         public int RoutineId { get; set; }
+        public DateTime CreateDateTime { get; set; }
+        public Users Users { get; internal set; }
+        public Routine Routine { get; internal set; }
+        public Poses Poses { get; internal set; }
     }
 }

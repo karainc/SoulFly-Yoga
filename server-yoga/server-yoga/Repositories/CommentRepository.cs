@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Hosting;
 using server_yoga.Models;
 using server_yoga.Repositories;
+using server_yoga.Utils;
 
 namespace server_yoga.Repositories
 {
-    public class CommentRepository : BaseRepository
+    public class CommentRepository : BaseRepository, ICommentRepository
     {
         public CommentRepository(IConfiguration config) : base(config) { }
 
@@ -18,14 +19,17 @@ namespace server_yoga.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT c.Id, c.RoutineId, c.UsersId, c.Text,
-                    r.Intention AS RoutineIntention, r.Cycles AS RoutineCycles, p.ImageLocation AS RoutineImageLocation,
+                    SELECT c.Id, 
+                    c.RoutineId, c.UsersId, c.Text, c.CreateDateTime,
+                    r.Intention AS RoutineIntention, r.Cycles AS RoutineCycles,
+                    p.Name AS PoseName
                     u.DisplayName AS UsersDisplayName
                     FROM Comment c
-                    LEFT JOIN Routine p ON c.RoutineId = p.Id
+                    JOIN Routine r ON c.RoutineId = p.Id
                     LEFT JOIN Users u ON c.UsersId = u.Id
+                    LEFT JOIN Poses p ON r.PoseId = p.Id
                     WHERE c.RoutineId = @RoutineId
-                    order by c.CreateDateTime desc";
+                    ORDER BY c.CreateDateTime DESC";
 
                     cmd.Parameters.AddWithValue("@RoutineId", routineId);
 
@@ -33,20 +37,34 @@ namespace server_yoga.Repositories
                     while (reader.Read())
                     {
                         Comment comment = new Comment();
+
                         comment.Id = reader.GetInt32(reader.GetOrdinal("id"));
                         comment.RoutineId = reader.GetInt32(reader.GetOrdinal("routineId"));
                         comment.UsersId = reader.GetInt32(reader.GetOrdinal("usersId"));
                         comment.Text = reader.GetString(reader.GetOrdinal("text"));
+                        comment.CreateDateTime = reader.GetDateTime(reader.GetOrdinal("createDateTime)"));
 
+                        comment.Routine = new Routine
+                        {
+                            Intention = reader.GetString(reader.GetOrdinal("RoutineIntention")),
+                            Cycles = reader.GetInt32(reader.GetOrdinal("RoutineCycles")),
+                        };
+
+                        comment.Users = new Users
+                        {
+                            DisplayName = reader.GetString(reader.GetOrdinal("UsersDisplayName"))
+                        };
+
+                        comment.Poses = new Poses
+                        {
+                            Name = reader.GetString(reader.GetOrdinal("PosesName"))
+                        };
                         comments.Add(comment);
                     }
                 }
             }
-
             return comments;
         }
-
-
 
         public void Add(Comment comment)
         {
@@ -55,14 +73,13 @@ namespace server_yoga.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Comment (RoutineId, UsersId, Text, Content, CreateDateTime) 
+                    cmd.CommandText = @"INSERT INTO Comment (RoutineId, UsersId, Text, CreateDateTime) 
                                                     OUTPUT INSERTED.ID
-                                                    VALUES (@RoutineId, @UsersId, @Text, @Content, @CreateDateTime)";
+                                                    VALUES (@RoutineId, @UsersId, @Text, @CreateDateTime)";
 
                     cmd.Parameters.AddWithValue("@RoutineId", comment.RoutineId);
                     cmd.Parameters.AddWithValue("@UsersId", comment.UsersId);
                     cmd.Parameters.AddWithValue("@Text", comment.Text);
-                    cmd.Parameters.AddWithValue("@Content", comment.Content);
                     cmd.Parameters.AddWithValue("@CreateDateTime", comment.CreateDateTime);
 
 
@@ -73,7 +90,7 @@ namespace server_yoga.Repositories
 
 
 
-        public void Delete(int id)
+        public void DeleteComment(int id)
         {
             using (var conn = Connection)
             {
@@ -94,7 +111,7 @@ namespace server_yoga.Repositories
 
 
 
-        public void Update(Comment comment)
+        public void UpdateComment(Comment comment)
         {
             using (var conn = Connection)
             {
@@ -104,18 +121,16 @@ namespace server_yoga.Repositories
                     cmd.CommandText = @"
                         UPDATE Comment
                         SET
-                        [RoutineId] = @postId,
+                        [RoutineId] = @routineId,
                          [UsersId] = @usersId,
-                         [Text] = @subject,
-                         [Content] = @content,
+                         [Text] = @text,
                          [CreateDateTime] = @createDateTime
                         WHERE Id = @id
                         ";
                     cmd.Parameters.AddWithValue("@id", comment.Id);
-                    cmd.Parameters.AddWithValue("@postId", comment.RoutineId);
+                    cmd.Parameters.AddWithValue("@routineId", comment.RoutineId);
                     cmd.Parameters.AddWithValue("@usersId", comment.UsersId);
-                    cmd.Parameters.AddWithValue("@subject", comment.Text);
-                    cmd.Parameters.AddWithValue("@content", comment.Content);
+                    cmd.Parameters.AddWithValue("@text", comment.Text);
                     cmd.Parameters.AddWithValue("@createDateTime", comment.CreateDateTime);
 
                     cmd.ExecuteNonQuery();
@@ -132,11 +147,11 @@ namespace server_yoga.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT c.Id, c.RoutineId, c.UsersId, c.Text,, c.CreateDateTime,
-                        p.Title AS RoutineTitle, p.Content AS RoutineContent, p.ImageLocation AS RoutineImageLocation,
+                        SELECT c.Id, c.RoutineId, c.UsersId, c.Text, c.CreateDateTime,
+                        r.Intention AS RoutineIntention, r.Cycles AS RoutineCycles,
                         u.DisplayName AS UsersDisplayName
                         FROM Comment c
-                        LEFT JOIN Routine p ON c.RoutineId = p.Id
+                        LEFT JOIN Routine r ON c.RoutineId = r.Id
                         LEFT JOIN Users u ON c.UsersId = u.Id
                         WHERE c.Id = @commentId";
 
@@ -144,29 +159,28 @@ namespace server_yoga.Repositories
                     var reader = cmd.ExecuteReader();
 
                     Comment comment = null;
-
                     if (reader.Read())
                     {
+                        //Create new comment object and populate its properties
                         comment = new Comment();
-
-                        comment.Id = reader.GetInt32(reader.GetOrdinal("Id"));
-                        comment.RoutineId = reader.GetInt32(reader.GetOrdinal("RoutineId"));
-                        comment.UsersId = reader.GetInt32(reader.GetOrdinal("UsersId"));
-                        comment.Text = reader.GetString(reader.GetOrdinal("Text"));
-                        comment.Content = reader.GetString(reader.GetOrdinal("Content"));
-                        comment.CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"));
-
-                        comment.Routine = new Routine
                         {
-                            Title = reader.GetString(reader.GetOrdinal("RoutineTitle")),
-                            Content = reader.GetString(reader.GetOrdinal("RoutineContent")),
-                            ImageLocation = reader.GetString(reader.GetOrdinal("RoutineImageLocation"))
-                        };
+                            comment.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                            comment.RoutineId = reader.GetInt32(reader.GetOrdinal("RoutineId"));
+                            comment.UsersId = reader.GetInt32(reader.GetOrdinal("UsersId"));
+                            comment.Text = reader.GetString(reader.GetOrdinal("Text"));
+                            comment.CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"));
 
-                        comment.Users = new Users
-                        {
-                            DisplayName = reader.GetString(reader.GetOrdinal("UsersDisplayName"))
-                        };
+                            comment.Routine = new Routine
+                            {
+                                Intention = reader.GetString(reader.GetOrdinal("RoutineIntention")),
+                                Cycles = reader.GetInt32(reader.GetOrdinal("RoutineCycles"))
+                            };
+
+                            comment.Users = new Users
+                            {
+                                DisplayName = reader.GetString(reader.GetOrdinal("UsersDisplayName"))
+                            };
+                        }
                     }
 
                     reader.Close();
@@ -175,11 +189,5 @@ namespace server_yoga.Repositories
                 }
             }
         }
-
-
-
-
-
-
     }
 }

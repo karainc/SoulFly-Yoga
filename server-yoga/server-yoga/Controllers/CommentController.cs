@@ -10,37 +10,62 @@ namespace server_yoga.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
+        private readonly ICommentRepository _commentRepo;
+        public CommentController(ICommentRepository commentRepository)
+        {
+            _commentRepo = commentRepository;
+        }
 
         // GET: api/<CommentController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("{id}")]
+        public ActionResult Get(int id)
         {
-            return new string[] { "value1", "value2" };
+            var comment = _commentRepo.GetAllByRoutineId(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            return Ok(comment);
         }
 
         // GET api/<CommentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("commentById/{id}")]
+        public IActionResult GetById(int id)
         {
-            return "value";
+            Comment comment = _commentRepo.GetCommentById(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            return Ok(comment);
         }
 
         // POST api/<CommentController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post(Comment comment)
         {
+            _commentRepo.Add(comment);
+            return CreatedAtAction("Get", new { id = comment.Id }, comment);
         }
 
-        // PUT api/<CommentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/localhost:7451/api/comment/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
+            _commentRepo.DeleteComment(id);
+            return NoContent();
         }
 
         // DELETE api/<CommentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Comment comment)
         {
+            if (id != comment.Id)
+            {
+                return BadRequest();
+            }
+            _commentRepo.UpdateComment(comment);
+            return NoContent();
         }
     }
 }
