@@ -1,20 +1,36 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import {ApplicationViews} from "./ApplicationViews"
+import Authorize from './components/Authorize';
+import './App.css';
+import { useEffect } from 'react';
+import React, { useState } from 'react';
+import Login from "./Pages/Login";
+
 
 const App=() => {
-  return <Router>
-    <Routes>
-    <Route path="*" element={
-            <>
-              <div className="content-container">
-                    <div className="content-container">
-                <ApplicationViews />  
-              </div>
-                </div>
-          </>
-        } />
-      </Routes>
-  </Router>
+
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+
+    useEffect(() => {
+        if (!localStorage.getItem("userProfile")) {
+            setIsLoggedIn(false)
+
+        }
+    }, [isLoggedIn])
+
+  return (
+    
+        <Router>
+          
+          <Login />
+            {isLoggedIn ?
+                <ApplicationViews />
+                :
+                <Authorize setIsLoggedIn={setIsLoggedIn} />
+            }
+        </Router>
+    );
 }
 
 export default App;

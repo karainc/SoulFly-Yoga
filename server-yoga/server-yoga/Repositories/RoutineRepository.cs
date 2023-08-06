@@ -47,7 +47,7 @@ namespace server_yoga.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT p.Id, p.Title, p.Content, p.ImageLocation AS ImageUrl, p.CreationDate, p.PublishDateTime, p.IsApproved, p.CategoryId, p.UsersId,
+                        SELECT r.Id, r.Title, r.Content, r.ImageLocation AS ImageUrl, r.CreationDate, r.PublishDateTime, r.IsApproved, p.CategoryId, p.UsersId,
                             c.[Name] as CategoryName,
                             u.DisplayName, u.Birthday, u.DisplayName, u.Email, u.CreationDate, u.ImageLocation as UserImageUrl, u.UserTypeId,
                             ut.[Name] as UserTypeName
@@ -60,15 +60,15 @@ namespace server_yoga.Repositories
                     ";
                     var reader = cmd.ExecuteReader();
 
-                    var posts = new List<Routine>();
+                    var routine = new List<Routine>();
 
                     while (reader.Read())
                     {
-                        posts.Add(NewRoutineFromReader(reader));
+                        routine.Add(NewRoutineFromReader(reader));
                     }
                     reader.Close();
 
-                    return posts;
+                    return routine;
                 }
             }
         }
@@ -94,15 +94,15 @@ namespace server_yoga.Repositories
                     cmd.Parameters.AddWithValue("@usersId", usersId);
                     var reader = cmd.ExecuteReader();
 
-                    var posts = new List<Routine>();
+                    var routine = new List<Routine>();
 
                     while (reader.Read())
                     {
-                        posts.Add(NewRoutineFromReader(reader));
+                        routine.Add(NewRoutineFromReader(reader));
                     }
                     reader.Close();
 
-                    return posts;
+                    return routine;
                 }
             }
         }
@@ -128,20 +128,20 @@ namespace server_yoga.Repositories
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
 
-                    Routine post = null;
+                    Routine routine = null;
 
                     if (reader.Read())
                     {
-                        post = NewRoutineFromReader(reader);
+                        routine = NewRoutineFromReader(reader);
                     }
 
                     reader.Close();
 
-                    return post;
+                    return routine;
                 }
             }
         }
-        public void Add(Routine post)
+        public void AddRoutine(Routine routine)
         {
             using (var conn = Connection)
             {
@@ -156,20 +156,20 @@ namespace server_yoga.Repositories
                         VALUES (
                             @Title, @Content, @ImageLocation, @CreationDate, @PublishDateTime,
                             @IsApproved, @CategoryId, @UsersId )";
-                    cmd.Parameters.AddWithValue("@Title", post.Title);
-                    cmd.Parameters.AddWithValue("@Content", post.Content);
-                    cmd.Parameters.AddWithValue("@ImageLocation", DbUtils.ValueOrDBNull(post.ImageLocation));
-                    cmd.Parameters.AddWithValue("@CreationDate", post.CreationDate);
-                    cmd.Parameters.AddWithValue("@PublishDateTime", DbUtils.ValueOrDBNull(post.PublishDateTime));
-                    cmd.Parameters.AddWithValue("@IsApproved", post.IsApproved);
-                    cmd.Parameters.AddWithValue("@CategoryId", post.CategoryId);
-                    cmd.Parameters.AddWithValue("@UsersId", post.UsersId);
+                    cmd.Parameters.AddWithValue("@Title", routine.Title);
+                    cmd.Parameters.AddWithValue("@Content", routine.Content);
+                    cmd.Parameters.AddWithValue("@ImageLocation", DbUtils.ValueOrDBNull(routine.ImageLocation));
+                    cmd.Parameters.AddWithValue("@CreationDate", routine.CreationDate);
+                    cmd.Parameters.AddWithValue("@PublishDateTime", DbUtils.ValueOrDBNull(routine.PublishDateTime));
+                    cmd.Parameters.AddWithValue("@IsApproved", routine.IsApproved);
+                    cmd.Parameters.AddWithValue("@CategoryId", routine.CategoryId);
+                    cmd.Parameters.AddWithValue("@UsersId", routine.UsersId);
 
-                    post.Id = (int)cmd.ExecuteScalar();
+                    routine.Id = (int)cmd.ExecuteScalar();
                 }
             }
         }
-        public void Update(Routine post)
+        public void UpdateRoutine(Routine routine)
         {
             using (var conn = Connection)
             {
@@ -188,21 +188,21 @@ namespace server_yoga.Repositories
                          [UsersId] = @usersId
                         WHERE Id = @id
                         ";
-                    cmd.Parameters.AddWithValue("@id", post.Id);
-                    cmd.Parameters.AddWithValue("@title", post.Title);
-                    cmd.Parameters.AddWithValue("@content", post.Content);
-                    cmd.Parameters.AddWithValue("@imageLocation", post.ImageLocation);
-                    cmd.Parameters.AddWithValue("@creationDate", post.CreationDate);
-                    cmd.Parameters.AddWithValue("@publishDateTime", post.PublishDateTime);
-                    cmd.Parameters.AddWithValue("@isApproved", post.IsApproved);
-                    cmd.Parameters.AddWithValue("@categoryId", post.CategoryId);
-                    cmd.Parameters.AddWithValue("@usersId", post.UsersId);
+                    cmd.Parameters.AddWithValue("@id", routine.Id);
+                    cmd.Parameters.AddWithValue("@title", routine.Title);
+                    cmd.Parameters.AddWithValue("@content", routine.Content);
+                    cmd.Parameters.AddWithValue("@imageLocation", routine.ImageLocation);
+                    cmd.Parameters.AddWithValue("@creationDate", routine.CreationDate);
+                    cmd.Parameters.AddWithValue("@publishDateTime", routine.PublishDateTime);
+                    cmd.Parameters.AddWithValue("@isApproved", routine.IsApproved);
+                    cmd.Parameters.AddWithValue("@categoryId", routine.CategoryId);
+                    cmd.Parameters.AddWithValue("@usersId", routine.UsersId);
 
                     cmd.ExecuteNonQuery();
                 }
             }
         }
-        public void Delete(int id)
+        public void DeleteRoutine(int id)
         {
             using (var conn = Connection)
             {

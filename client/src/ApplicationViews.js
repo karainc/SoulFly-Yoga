@@ -1,18 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import { YogaCategories } from "./YogaCategories";
+import { YogaCategories } from "./components/YogaCategories";
+import React from "react";
 
 export const ApplicationViews = () => {
 
     return (
         <Routes>
-            <Route path="/" element={
-                <>
-                <h1>SoulFly Yoga</h1>
-                <div>Your Yoga Experience</div>
-                <YogaCategories />
-                </>
-            }
-            />
+            {/* <Route path="/" element={<YogaCategories />} /> */}
         </Routes>
-    )
-}
+    );
+};
