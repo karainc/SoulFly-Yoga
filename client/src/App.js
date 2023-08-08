@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import {ApplicationViews} from "./ApplicationViews"
 import Authorize from './components/Authorize';
-import './App.css';
+import NavBar from "./components/Navbar/NavBar";
 import { useEffect } from 'react';
 import React, { useState } from 'react';
-import Login from "./Pages/Login";
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 
 const App=() => {
@@ -13,24 +14,21 @@ const App=() => {
 
 
     useEffect(() => {
-        if (!localStorage.getItem("userProfile")) {
+        if (!localStorage.getItem("users")) {
             setIsLoggedIn(false)
 
         }
     }, [isLoggedIn])
 
-  return (
-    
-        <Router>
-          
-          <Login />
-            {isLoggedIn ?
-                <ApplicationViews />
-                :
-                <Authorize setIsLoggedIn={setIsLoggedIn} />
-            }
-        </Router>
-    );
+    return (
+      <Router>
+          <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          {isLoggedIn ?
+              <ApplicationViews />
+              :
+              <Authorize setIsLoggedIn={setIsLoggedIn} />
+          }
+      </Router>
+  );
 }
-
 export default App;

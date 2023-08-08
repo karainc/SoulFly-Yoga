@@ -11,7 +11,7 @@ namespace server_yoga.Models
 
         public int PoseId { get; set; }
 
-        public int CommentId { get; set; }
+        public int? CommentId { get; set; }
 
     }
 }

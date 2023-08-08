@@ -20,7 +20,7 @@ namespace server_yoga.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var comment = _commentRepo.GetAllByRoutineId(id);
+            List<Comment> comment = _commentRepo.GetAllByRoutineId(id);
             if (comment == null)
             {
                 return NotFound();
@@ -44,7 +44,7 @@ namespace server_yoga.Controllers
         [HttpPost]
         public ActionResult Post(Comment comment)
         {
-            _commentRepo.Add(comment);
+            _commentRepo.AddComment(comment);
             return CreatedAtAction("Get", new { id = comment.Id }, comment);
         }
 
@@ -56,7 +56,7 @@ namespace server_yoga.Controllers
             return NoContent();
         }
 
-        // DELETE api/<CommentController>/5
+        //UPDATE api/<CommentController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, Comment comment)
         {

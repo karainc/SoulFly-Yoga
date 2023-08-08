@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\server-yoga.bundle.scp.css",
-      "PackagePath": "staticwebassets\\server-yoga.bundle.scp.css"
+      "Id": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\SoulFly.bundle.scp.css",
+      "PackagePath": "staticwebassets\\SoulFly.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\wwwroot\\css\\site.css",
@@ -245,20 +245,20 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.server-yoga.props",
-      "PackagePath": "build\\server-yoga.props"
-    },
-    {
-      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.server-yoga.props",
-      "PackagePath": "buildMultiTargeting\\server-yoga.props"
-    },
-    {
-      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.server-yoga.props",
-      "PackagePath": "buildTransitive\\server-yoga.props"
-    },
-    {
-      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.server-yoga.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.SoulFly.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.SoulFly.props",
+      "PackagePath": "build\\SoulFly.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.SoulFly.props",
+      "PackagePath": "buildMultiTargeting\\SoulFly.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.SoulFly.props",
+      "PackagePath": "buildTransitive\\SoulFly.props"
     }
   ],
   "ElementsToRemove": []

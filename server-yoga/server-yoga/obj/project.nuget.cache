@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NFj4ib+BbKt/5/2QDrz7+5d/reX7ghBMRq/fC2LB9OUbpF9a7FjspOsqOxs/BJMF1m6H06HFblx/UEQZDY81Sg==",
+  "dgSpecHash": "U9SkMCWHx9adueTT1g8Pg6OtX+SiFWyEumROtCXOiLL9pg2DXkAEV+2RRewLK3+pyyeUsSFVBPKAodpN7OSMpA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\server-yoga.csproj",
+  "projectFilePath": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\SoulFly.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\karal\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\karal\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

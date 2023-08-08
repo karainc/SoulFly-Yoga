@@ -1,7 +1,6 @@
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import React from 'react';
 import './Login.css';
-import NavBar from '../components/Navbar/NavBar';
 import {
   Card,
   CardHeader,
@@ -31,9 +30,9 @@ const Login = () =>{
   }, []);
   return (
   <>
-    <NavBar />
-    <div className="page-header clear-filter" filter-color="blue">
-   
+  
+    {/* <div className="page-header clear-filter" filter-color="blue"> */}
+
     <div className="content">
           <Container>
             <Col className="ml-auto mr-auto" md="4">
@@ -139,7 +138,7 @@ const Login = () =>{
         <a href="/forgot-password">Forgot Password?</a>
       </div>
   </Form>
-      </div>
+      
   </>
 );
   };

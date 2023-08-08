@@ -6,7 +6,7 @@ using server_yoga.Utils;
 
 namespace server_yoga.Repositories
 {
-    public class RoutineRepository : BaseRepository
+    public class RoutineRepository : BaseRepository, IRoutineRepository
     {
         public RoutineRepository(IConfiguration configuration) : base(configuration) { }
 
@@ -18,24 +18,23 @@ namespace server_yoga.Repositories
                 Intention = reader.GetString(reader.GetOrdinal("Intention")),
                 Reflection = reader.GetString(reader.GetOrdinal("Reflection")),
                 CreationDate = reader.GetDateTime(reader.GetOrdinal("CreationDate")),
-                UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                 Cycles = reader.GetInt32(reader.GetOrdinal("Cycles")),
                 PoseId = reader.GetInt32(reader.GetOrdinal("PoseId")),
                 Poses = new Poses()
                 {
-                    Id = reader.GetInt32(reader.GetOrdinal("PosesId")),
-                    Name = reader.GetString(reader.GetOrdinal("PosesName")),
-                    Image = DbUtils.GetString(reader, "Image"),
+                    Id = reader.GetInt32(reader.GetOrdinal("PoseId")),
+                    Name = reader.GetString(reader.GetOrdinal("PoseName")),
+
                 },
-                UsersId = reader.GetInt32(reader.GetOrdinal("UsersId")),
+                UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                 Users = new Users()
                 {
-                    Id = reader.GetInt32(reader.GetOrdinal("UsersId")),
+                    Id = reader.GetInt32(reader.GetOrdinal("UserId")),
                     DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
                     Birthday = reader.GetString(reader.GetOrdinal("Birthday")),
                     Password = reader.GetString(reader.GetOrdinal("Password")),
                     Email = reader.GetString(reader.GetOrdinal("Email"))
-                   
+
                 }
             };
         }
@@ -47,32 +46,30 @@ namespace server_yoga.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT r.Id, r.Title, r.Content, r.ImageLocation AS ImageUrl, r.CreationDate, r.PublishDateTime, r.IsApproved, p.CategoryId, p.UsersId,
-                            c.[Name] as CategoryName,
-                            u.DisplayName, u.Birthday, u.DisplayName, u.Email, u.CreationDate, u.ImageLocation as UserImageUrl, u.UserTypeId,
-                            ut.[Name] as UserTypeName
-                        FROM Routine p
-                            LEFT JOIN Category c ON p.CategoryId = c.Id
-                            LEFT JOIN Users u ON p.UsersId = u.Id
-                            LEFT JOIN UserType ut ON u.UserTypeId = ut.Id
-                        WHERE IsApproved = 1 AND PublishDateTime <= SYSDATETIME()
-                        ORDER BY PublishDateTime desc
+                        SELECT r.Id, r.Intention, r.Cycles, r.PoseId, r.CreationDate, r.Reflection, r.UserId, 
+                            p.[Name] as PoseName,
+                            u.DisplayName,                         
+                        FROM Routine r
+                            LEFT JOIN Poses p ON r.PoseId = p.Id
+                            LEFT JOIN Users u ON r.UserId = u.Id
+          
+                        ORDER BY r.CreationDate desc
                     ";
-                    var reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-                    var routine = new List<Routine>();
+                    var routines = new List<Routine>();
 
                     while (reader.Read())
                     {
-                        routine.Add(NewRoutineFromReader(reader));
+                        routines.Add(NewRoutineFromReader(reader));
                     }
                     reader.Close();
 
-                    return routine;
+                    return routines;
                 }
             }
         }
-        public List<Routine> GetRoutinesByUserId(int usersId)
+        public List<Routine> GetRoutinesByUserId(int userId)
         {
             using (var conn = Connection)
             {
@@ -80,29 +77,27 @@ namespace server_yoga.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT p.Id, p.Title, p.Content, p.ImageLocation AS ImageUrl, p.CreationDate, p.PublishDateTime, p.IsApproved, p.CategoryId, p.UsersId,
-                            c.[Name] as CategoryName,
-                            u.DisplayName, u.Birthday, u.DisplayName, u.Email, u.CreationDate, u.ImageLocation as UserImageUrl, u.UserTypeId,
-                            ut.[Name] as UserTypeName
-                        FROM Routine p
-                            LEFT JOIN Category c ON p.CategoryId = c.Id
-                            LEFT JOIN Users u ON p.UsersId = u.Id
-                            LEFT JOIN UserType ut ON u.UserTypeId = ut.Id
-                        WHERE IsApproved = 1 AND PublishDateTime <= SYSDATETIME() AND p.UsersId = @usersId
+                        SELECT r.Id, r.Intention, r.Cycles, r.Reflection, r.CreationDate, r.PoseId, r.UserId,
+                            p.[Name] as PosesName,
+                            u.DisplayName,
+                        FROM Routine r
+                            LEFT JOIN Poses p ON r.PoseId = p.Id
+                            LEFT JOIN Users u ON r.UserId = u.Id
+                        WHERE UserId = 1 AND CreationDate <= SYSDATETIME() AND p.UserId = @userId
                         ORDER BY p.CreationDate desc
                     ";
-                    cmd.Parameters.AddWithValue("@usersId", usersId);
+                    cmd.Parameters.AddWithValue("@userId", userId);
                     var reader = cmd.ExecuteReader();
 
-                    var routine = new List<Routine>();
+                    var routines = new List<Routine>();
 
                     while (reader.Read())
                     {
-                        routine.Add(NewRoutineFromReader(reader));
+                        routines.Add(NewRoutineFromReader(reader));
                     }
                     reader.Close();
 
-                    return routine;
+                    return routines;
                 }
             }
         }
@@ -114,16 +109,14 @@ namespace server_yoga.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT p.Id, p.Title, p.Content, p.ImageLocation AS ImageUrl, p.CreationDate, p.PublishDateTime, p.IsApproved, p.CategoryId, p.UsersId,
-                            c.[Name] as CategoryName,
-                            u.DisplayName, u.Birthday, u.DisplayName, u.Email, u.CreationDate, u.ImageLocation as UserImageUrl, u.UserTypeId,
-                            ut.[Name] as UserTypeName
-                        FROM Routine p
-                            LEFT JOIN Category c ON p.CategoryId = c.Id
-                            LEFT JOIN Users u ON p.UsersId = u.Id
-                            LEFT JOIN UserType ut ON u.UserTypeId = ut.Id
-                        WHERE IsApproved = 1 AND PublishDateTime <= SYSDATETIME()
-                        AND p.Id = @id";
+                        SELECT r.Id, r.Intention, r.Cycles, r.Reflection, r.CreationDate, r.UserId, r.PoseId,
+                            p.[Name] as PosesName,
+                            u.DisplayName,
+                        FROM Routine r
+                            LEFT JOIN Poses p ON r.PoseId = p.Id
+                            LEFT JOIN Users u ON r.UserId = u.Id
+                        WHERE CreationDate <= SYSDATETIME()
+                        AND r.Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
@@ -150,20 +143,18 @@ namespace server_yoga.Repositories
                 {
                     cmd.CommandText = @"
                         INSERT INTO Routine (
-                            Title, Content, ImageLocation, CreationDate, PublishDateTime,
-                            IsApproved, CategoryId, UsersId )
+                            Intention, Cycles, Reflection, CreationDate,
+                            UserId, PoseId )
                         OUTPUT INSERTED.ID
                         VALUES (
-                            @Title, @Content, @ImageLocation, @CreationDate, @PublishDateTime,
-                            @IsApproved, @CategoryId, @UsersId )";
-                    cmd.Parameters.AddWithValue("@Title", routine.Title);
-                    cmd.Parameters.AddWithValue("@Content", routine.Content);
-                    cmd.Parameters.AddWithValue("@ImageLocation", DbUtils.ValueOrDBNull(routine.ImageLocation));
-                    cmd.Parameters.AddWithValue("@CreationDate", routine.CreationDate);
-                    cmd.Parameters.AddWithValue("@PublishDateTime", DbUtils.ValueOrDBNull(routine.PublishDateTime));
-                    cmd.Parameters.AddWithValue("@IsApproved", routine.IsApproved);
-                    cmd.Parameters.AddWithValue("@CategoryId", routine.CategoryId);
-                    cmd.Parameters.AddWithValue("@UsersId", routine.UsersId);
+                            @Intention, @Cycles, @Reflection, @CreationDate,
+                            @UserId, @PoseId )";
+                    cmd.Parameters.AddWithValue("@Intention", routine.Intention);
+                    cmd.Parameters.AddWithValue("@Cycles", routine.Cycles);
+                    cmd.Parameters.AddWithValue("@Reflection", routine.Reflection);
+                    cmd.Parameters.AddWithValue("@CreationDate", DbUtils.ValueOrDBNull(routine.CreationDate));
+                    cmd.Parameters.AddWithValue("@UserId", routine.UserId);
+                    cmd.Parameters.AddWithValue("@PosesId", routine.PoseId);
 
                     routine.Id = (int)cmd.ExecuteScalar();
                 }
@@ -179,24 +170,21 @@ namespace server_yoga.Repositories
                     cmd.CommandText = @"
                         UPDATE Routine
                         SET
-                        [Title] = @title,
-                         [Content] = @content,
-                         [ImageLocation] = @imageLocation,
+                        [Intention] = @intention,
+                         [Cycles] = @cycles,
+                         [Reflection] = @reflection,
                          [CreationDate] = @creationDate,
-                         [PublishDateTime] = @publishDateTime,
-                         [CategoryId] = @categoryId,
-                         [UsersId] = @usersId
+                         [PoseId] = @poseId,
+                         [UserId] = @userId
                         WHERE Id = @id
                         ";
                     cmd.Parameters.AddWithValue("@id", routine.Id);
-                    cmd.Parameters.AddWithValue("@title", routine.Title);
-                    cmd.Parameters.AddWithValue("@content", routine.Content);
-                    cmd.Parameters.AddWithValue("@imageLocation", routine.ImageLocation);
+                    cmd.Parameters.AddWithValue("@intention", routine.Intention);
+                    cmd.Parameters.AddWithValue("@cycles", routine.Cycles);
+                    cmd.Parameters.AddWithValue("@reflection", routine.Reflection);
                     cmd.Parameters.AddWithValue("@creationDate", routine.CreationDate);
-                    cmd.Parameters.AddWithValue("@publishDateTime", routine.PublishDateTime);
-                    cmd.Parameters.AddWithValue("@isApproved", routine.IsApproved);
-                    cmd.Parameters.AddWithValue("@categoryId", routine.CategoryId);
-                    cmd.Parameters.AddWithValue("@usersId", routine.UsersId);
+                    cmd.Parameters.AddWithValue("@userId", routine.UserId);
+                    cmd.Parameters.AddWithValue("@poseId", routine.PoseId);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -218,10 +206,6 @@ namespace server_yoga.Repositories
 
                     cmd.ExecuteNonQuery();
                 }
-            }
-        }
-    }
-}
             }
         }
     }

@@ -2221,9 +2221,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\server-yoga.csproj",
-      "projectName": "server-yoga",
-      "projectPath": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\server-yoga.csproj",
+      "projectUniqueName": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\SoulFly.csproj",
+      "projectName": "SoulFly",
+      "projectPath": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\SoulFly.csproj",
       "packagesPath": "C:\\Users\\karal\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\karal\\workspace\\capstone\\soulfly-yoga\\server-yoga\\server-yoga\\obj\\",
       "projectStyle": "PackageReference",

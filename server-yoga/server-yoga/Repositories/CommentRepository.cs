@@ -66,7 +66,7 @@ namespace server_yoga.Repositories
             return comments;
         }
 
-        public void Add(Comment comment)
+        public void AddComment(Comment comment)
         {
             using (var conn = Connection)
             {
