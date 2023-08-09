@@ -1,13 +1,15 @@
 ﻿using server_yoga.Models;
 using server_yoga.Utils;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
+using server_yoga.Repositories;
 
 
 namespace server_yoga.Repositories
 {
     public class PosesRepository : BaseRepository, IPosesRepository
     {
-        private readonly List<Poses> poses;
-
         public PosesRepository(IConfiguration config) : base(config) { }
 
         public List<Poses> GetAllPoses()
@@ -17,11 +19,7 @@ namespace server_yoga.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"
-                    SELECT Poses.Id, 
-                    Poses.Name, Poses.Description, Poses.Image,
-                    FROM [Poses]                
-                    ORDER BY Name";
+                    cmd.CommandText = @"SELECT Id, Name, Description, Image FROM Poses ORDER BY Name ASC";
 
                     var reader = cmd.ExecuteReader();
 
@@ -39,12 +37,13 @@ namespace server_yoga.Repositories
 
                     }
                     reader.Close();
+
                     return poses;
                 }
             }
         }
 
-
+        //get by id
         public Poses GetPosesById(int id)
         {
             using (var conn = Connection)
@@ -52,26 +51,28 @@ namespace server_yoga.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
+
                     cmd.CommandText = @"
-                       SELECT Id, 
-                    Name, Description, Image,
+                    SELECT Id, [Name], [Description], [Image]
                     FROM Poses
-                    ORDER BY NAME";
-                    cmd.Parameters.AddWithValue("@id", id);
+                    WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
                     var reader = cmd.ExecuteReader();
 
                     Poses poses = null;
                     if (reader.Read())
                     {
                         //Create new poses object and populate its properties
-                        poses = new Poses();
+                        poses = new Poses()
                         {
-                            poses.Id = reader.GetInt32(reader.GetOrdinal("Id"));
-                            poses.Name = reader.GetString(reader.GetOrdinal("Name"));
-                            poses.Description = reader.GetString(reader.GetOrdinal("Description"));
-                            poses.Image = reader.GetString(reader.GetOrdinal("Image"));
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Description = DbUtils.GetString(reader, "Description"),
+                            Image = DbUtils.GetString(reader, "Image"),
 
-                        }
+                        };
                     }
 
                     reader.Close();

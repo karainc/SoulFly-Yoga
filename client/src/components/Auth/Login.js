@@ -47,14 +47,15 @@ const Login = () =>{
                         "no-border input-lg" +
                         (firstFocus ? " input-group-focus" : "")
                       }
-                    >
+                    >     <h2 className="text-center">
+                    Welcome to SoulFly Yoga</h2>
             
                         <InputGroupText>
                           <i className="now-ui-icons users_circle-08"></i>
                         </InputGroupText>
    
                       <Input
-                        placeholder="First Name..."
+                        placeholder="Email..."
                         type="text"
                         onFocus={() => setFirstFocus(true)}
                         onBlur={() => setFirstFocus(false)}
@@ -72,7 +73,7 @@ const Login = () =>{
                         </InputGroupText>
                    
                       <Input
-                        placeholder="Last Name..."
+                        placeholder="Pasword..."
                         type="text"
                         onFocus={() => setLastFocus(true)}
                         onBlur={() => setLastFocus(false)}
@@ -88,7 +89,7 @@ const Login = () =>{
                       onClick={(e) => e.preventDefault()}
                       size="lg"
                     >
-                      Get Started
+                      LOGIN
                     </Button>
                     <div className="pull-left">
                       <h6>
@@ -133,7 +134,7 @@ const Login = () =>{
         </FormGroup>
       <Button className="btn-lg btn-dark btn-block">Log In</Button>
        <div className="text-center">
-        <a href="/sign-up">Sign up</a>
+        <a href="/sign-up">Log In</a>
           <span className="p-2">|</span>
         <a href="/forgot-password">Forgot Password?</a>
       </div>

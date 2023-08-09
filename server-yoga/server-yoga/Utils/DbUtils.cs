@@ -1,7 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Options;
-using System;
-using System.Data;
 
 namespace server_yoga.Utils
 {
@@ -34,11 +31,6 @@ namespace server_yoga.Utils
         public static int GetInt(SqlDataReader reader, string column)
         {
             return reader.GetInt32(reader.GetOrdinal(column));
-        }
-
-        public static bool GetBoolean(SqlDataReader reader, string column)
-        {
-            return reader.GetBoolean(Convert.ToString(column));
         }
 
         /// <summary>
@@ -108,10 +100,7 @@ namespace server_yoga.Utils
         {
             return !IsDbNull(reader, column);
         }
-        public static object ValueOrDBNull(object value)
-        {
-            return value ?? DBNull.Value;
-        }
+
         /// <summary>
         ///  Add a parameter to the given SqlCommand object and gracefully handle null values.
         /// </summary>
@@ -128,6 +117,21 @@ namespace server_yoga.Utils
             {
                 cmd.Parameters.AddWithValue(name, value);
             }
+        }
+
+        internal static object ValueOrDBNull(string imageLocation)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static object ValueOrDBNull(object publishDateTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static string GetNullableString(SqlDataReader reader, string v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

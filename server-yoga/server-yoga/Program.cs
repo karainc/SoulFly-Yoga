@@ -1,11 +1,13 @@
 using server_yoga.Repositories;
+using server_yogaRepositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace server_yoga
 {
     public class Program
     {
 
-        private const string CONNECTION_STRING = @"server=localhost\SQLExpress;database=server_yoga;integrated security=true; TrustServerCertificate=True;";
+      
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,7 @@ namespace server_yoga
             builder.Services.AddTransient<ICommentRepository, CommentRepository>();
             builder.Services.AddTransient<IRoutineRepository, RoutineRepository>();
             builder.Services.AddTransient<IPosesRepository, PosesRepository>();
+            builder.Services.AddTransient<IRoutinePosesRepository, RoutinePosesRepository>();
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
