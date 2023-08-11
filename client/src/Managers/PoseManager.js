@@ -1,6 +1,6 @@
 import React from "react";
 
-const apiUrl = "https://localhost:7063";
+const apiUrl = "https://localhost:7145";
 
 //Returns a list of all poses
 export const getAllPoses = () => {

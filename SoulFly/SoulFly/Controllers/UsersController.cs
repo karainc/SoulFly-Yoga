@@ -40,7 +40,7 @@ namespace SoulFly.Controllers
         {
             var user = _usersRepository.GetByEmail(email);
 
-            if (email == null || user == null)
+            if ( user == null)
             {
                 return NotFound();
             }

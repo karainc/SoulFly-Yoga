@@ -13,13 +13,12 @@ export const RoutineDetails = () => {
 
 
   useEffect(() => {
-    getRoutineById(id).then(setRoutine);
-       
-  }, [])
+    getRoutineById(id).then(setRoutine);     
+  }, []);
 
-  if (!routine) {
-    return null;
-  }
+    if (!routine) {
+        return null;
+    }
 
   const handleDelete = () => {
     deleteRoutine(routine.id).then(() => {
@@ -68,15 +67,19 @@ export const RoutineDetails = () => {
 
   return (
     <Card>
-        <CardTitle><b>{routine.intention}</b></CardTitle>
+        
+        <CardTitle><b>The intention of this routine is to:  {routine.intention}</b></CardTitle>
         <CardBody>
-            <CardText>{routine.cycles}</CardText>
-            <CardText>{routine.poseId}</CardText>
+            <CardText>Number of Cycles:  {routine.cycles}</CardText>
+            <CardText>Name of Pose: {routine.poses.name}</CardText>
+            <CardText>Pose Description: {routine.poses.description}</CardText>
+            <CardText>Image of Pose: {routine.poses.image}</CardText>
+            <CardText>Relection: {routine.reflection}</CardText>
             <CardText>
-                Created on {routine.creationDate} by <b>{routine?.user?.displayName}</b>
+                Created on: {routine.creationDate} by: <b>{routine.users.displayName}</b>
             </CardText>
-            <Button onClick={() => navigate(`/commentsById/${routine.id}`)}>View Comments</Button>
-            <Button onClick={() => navigate(`/addComment/${routine.id}`)}>Add Comment</Button>
+            {/* <Button onClick={() => navigate(`/commentsById/${routine.id}`)}>View Comments</Button>
+            <Button onClick={() => navigate(`/addComment/${routine.id}`)}>Add Comment</Button> */}
          
             {deleteButtonForUser()}
             {editRoutineButtonForUser()}

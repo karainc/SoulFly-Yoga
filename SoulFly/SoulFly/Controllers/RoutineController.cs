@@ -48,6 +48,7 @@ namespace SoulFly.Controllers
         [HttpPost]
         public IActionResult Post(Routine routine)
         {
+            routine.CreationDate = DateTime.Now;
             _routineRepo.AddRoutine(routine);
             return CreatedAtAction("Get", new { id = routine.Id }, routine);
         }
@@ -58,6 +59,7 @@ namespace SoulFly.Controllers
             {
                 return BadRequest();
             }
+            routine.CreationDate = DateTime.Now;
             _routineRepo.UpdateRoutine(routine);
             return NoContent();
         }

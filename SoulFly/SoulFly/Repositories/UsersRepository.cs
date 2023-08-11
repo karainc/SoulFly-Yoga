@@ -20,8 +20,7 @@ namespace SoulFly.Repositories
                         SELECT u.Id, u.DisplayName, u.Birthday, u.Password, 
                                u.Email 
                              
-                        FROM Users u
-                         WHERE Id = @Id";
+                        FROM Users u";
 
 
                     var reader = cmd.ExecuteReader();

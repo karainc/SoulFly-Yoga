@@ -1,11 +1,11 @@
-const baseUrl = '/api/Routine';
+const baseUrl = '/api/routine';
 
 //Fetching every routine in the database
 export const getAllRoutines = () => {
     return fetch(baseUrl).then((res) => res.json())
 };
 
-//Fetching only routines made by a user in the database. The "id" parameter is essential because we connect this with the user's id through localStorage
+
 export const getRoutinesByUserId = (id) => {
     return fetch(`${baseUrl}/GetUsersRoutines/${id}`).then((res) => res.json())
 }
@@ -33,8 +33,8 @@ export const deleteRoutine = (id) => {
       .then(() => getAllRoutines())
   };
 
-//PUT fetch to edit the individual post. Selecting it by it's id
-  export const editRoutine = (routine) => {
+
+  export const updateRoutine = (routine) => {
     console.log(routine)
     return fetch(`/api/Routine/${routine.Id}`, {
         method: "PUT",

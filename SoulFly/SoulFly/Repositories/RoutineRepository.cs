@@ -22,7 +22,7 @@ namespace SoulFly.Repositories
                 Poses = new Poses()
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    Name = reader.GetString(reader.GetOrdinal("PoseName")),
+                    Name = reader.GetString(reader.GetOrdinal("PosesName")),
                     Description = reader.GetString(reader.GetOrdinal("Description")),
                     Image = reader.GetString(reader.GetOrdinal("Image"))
 
@@ -48,7 +48,7 @@ namespace SoulFly.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT r.Id, r.Intention, r.Cycles, r.PoseId, r.CreationDate, r.Reflection, r.UserId, 
-                            p.[Name] as PoseName, p.Description, p.Image,
+                            p.[Name] as PosesName, p.Description, p.Image,
                             u.DisplayName, u.Birthday, u.Email, u.Password                     
                         FROM Routine r
                             LEFT JOIN Poses p ON r.PoseId = p.Id
@@ -148,14 +148,14 @@ namespace SoulFly.Repositories
                             UserId, PoseId )
                         OUTPUT INSERTED.ID
                         VALUES (
-                            @Intention, @Cycles, @Reflection, @CreationDate,
-                            @UserId, @PoseId )";
-                    cmd.Parameters.AddWithValue("@Intention", routine.Intention);
-                    cmd.Parameters.AddWithValue("@Cycles", routine.Cycles);
-                    cmd.Parameters.AddWithValue("@Reflection", routine.Reflection);
-                    cmd.Parameters.AddWithValue("@CreationDate", DbUtils.ValueOrDBNull(routine.CreationDate));
-                    cmd.Parameters.AddWithValue("@UserId", routine.UserId);
-                    cmd.Parameters.AddWithValue("@PosesId", routine.PoseId);
+                            @intention, @cycles, @reflection, @creationDate,
+                            @userId, @poseId )";
+                    cmd.Parameters.AddWithValue("@intention", routine.Intention);
+                    cmd.Parameters.AddWithValue("@cycles", routine.Cycles);
+                    cmd.Parameters.AddWithValue("@reflection", routine.Reflection);
+                    cmd.Parameters.AddWithValue("@creationDate", routine.CreationDate);
+                    cmd.Parameters.AddWithValue("@userId", routine.UserId);
+                    cmd.Parameters.AddWithValue("@poseId", routine.PoseId);
 
                     routine.Id = (int)cmd.ExecuteScalar();
                 }
@@ -174,7 +174,6 @@ namespace SoulFly.Repositories
                         [Intention] = @intention,
                          [Cycles] = @cycles,
                          [Reflection] = @reflection,
-                         [CreationDate] = @creationDate,
                          [PoseId] = @poseId,
                          [UserId] = @userId
                         WHERE Id = @id
@@ -183,7 +182,6 @@ namespace SoulFly.Repositories
                     cmd.Parameters.AddWithValue("@intention", routine.Intention);
                     cmd.Parameters.AddWithValue("@cycles", routine.Cycles);
                     cmd.Parameters.AddWithValue("@reflection", routine.Reflection);
-                    cmd.Parameters.AddWithValue("@creationDate", routine.CreationDate);
                     cmd.Parameters.AddWithValue("@userId", routine.UserId);
                     cmd.Parameters.AddWithValue("@poseId", routine.PoseId);
 

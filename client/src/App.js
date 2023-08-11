@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { BrowserRouter as Router } from "react-router-dom"
 import {ApplicationViews} from "./ApplicationViews"
 import Authorize from './components/Authorize';
-import NavBar from "./components/Navbar/NavBar";
 import { useEffect } from 'react';
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import Header from "./components/Header";
+import './index.css';
 
 
 
@@ -22,7 +23,7 @@ const App=() => {
 
     return (
       <Router>
-          <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
           {isLoggedIn ?
               <ApplicationViews />
               :

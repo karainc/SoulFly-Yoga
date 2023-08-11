@@ -13,8 +13,8 @@ namespace SoulFly
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddTransient<IRoutineRepository, RoutineRepository>();
-             builder.Services.AddTransient<ICommentRepository, CommentRepository>();
-             builder.Services.AddTransient<IPosesRepository, PosesRepository>();
+            builder.Services.AddTransient<ICommentRepository, CommentRepository>();
+            builder.Services.AddTransient<IPosesRepository, PosesRepository>();
             builder.Services.AddTransient<IRoutinePosesRepository, RoutinePosesRepository>();
             builder.Services.AddTransient<IUsersRepository, UsersRepository>();
 

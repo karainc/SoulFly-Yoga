@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {editRoutine, getRoutineById} from "../Managers/RoutineManager"
+import {updateRoutine, getRoutineById} from "../Managers/RoutineManager"
 import {getAllPoses} from "../Managers/PoseManager"
+import { Button, Form, FormGroup, Input, Label } from "reactstrap"
 
 //SEE RoutineFORM FOR SIMILAR CODE AND EXPLANATION
-//Notice that useParams is crucial for our edit. This is how we get the data for the specific Routine we are on as well as PUT to the database, overriding the old information with our newly updated inputs
+//Notice that useParams is crucial for our edit. This is how we get the data for the specific Routine we are on as well as PUT to the database, overriding the old information with our newly updated Inputs
 export const RoutineEdit = () => {
     const navigate = useNavigate()
     const localSoulFlyUser = localStorage.getItem("user");
@@ -24,8 +25,8 @@ export const RoutineEdit = () => {
         intention: "",
         reflection: null,
         cycles: 0,
-        userId: soulFlyUserObject.id,
-        creationDate: Date.now(),
+        userId: soulFlyUserObject,
+        creationDate: Date(),
         poseId: 0
     })
 
@@ -44,15 +45,14 @@ export const RoutineEdit = () => {
             Intention: routine.intention,
             Reflection: routine.reflection,
             Cycles: routine.cycles,
-            CreationDate: routine.creationDate,
             PoseId: routine.poseId,
             UserId: routine.userId
         }
 
-        if (routineToEdit.PoseId < 1) {
+        if (routineToEdit.PoseId < 0) {
         return window.alert("There is no routine without a pose!")}
         else{
-            return editRoutine(routineToEdit)
+            return updateRoutine(routineToEdit)
             .then(() => {
                 navigate(`/routines`)
             })
@@ -63,18 +63,18 @@ export const RoutineEdit = () => {
         const copy = {
             ...routine
         }
-        copy.poseId = event.target.value
+        copy.routineId = event.target.value
         update(copy)
     }
 
     return (
         <div>
-            <form className="routineForm">
+            <Form className="routineForm">
                 <h2 className="routineForm">New Routine</h2>
 
-                <fieldset>
+                <FormGroup>
                     <div className="form-group">
-                        <label htmlFor="pose-select">Pose</label>
+                        <Label htmlFor="pose-select">Pose</Label>
                         <select id="type"
                             required
                             value={
@@ -83,7 +83,7 @@ export const RoutineEdit = () => {
                             onChange={
                                 event => selectList(event)
                         }>
-                            <option value="5">Select your poses</option>
+                            <option value="0">Select your poses</option>
                             {
                             poses.map(pose => {
                                 return <option value={pose.id} key={
@@ -95,11 +95,11 @@ export const RoutineEdit = () => {
                         })
                         } </select>  
                         </div>
-                </fieldset>
-                <fieldset>
+                </FormGroup>
+                <FormGroup>
                     <div className="form-group">
-                        <label htmlFor="intention">Set your Intention</label>
-                        <input id="intention" type="text" className="form-control"
+                        <Label htmlFor="intention">Set your Intention</Label>
+                        <Input id="intention" type="text" className="form-control"
                             value={
                                 routine.intention
                             }
@@ -113,11 +113,11 @@ export const RoutineEdit = () => {
                                 }
                             }/>
                     </div>
-            </fieldset>
-            <fieldset>
+            </FormGroup>
+            <FormGroup>
                 <div className="form-group">
-                    <label htmlFor="cycle">Cycles</label>
-                    <input id="cycle" type="text" className="form-control"
+                    <Label htmlFor="cycle">Cycles</Label>
+                    <Input id="cycle" type="text" className="form-control"
                         value={
                             routine.cycles
                         }
@@ -131,15 +131,15 @@ export const RoutineEdit = () => {
                             }
                         }/>
                 </div>
-        </fieldset>
+        </FormGroup>
 
 
-    <button className="btn btn-primary"
+    <Button className="btn btn-primary"
         onClick={
             (clickEvent) => handleSaveButtonClick(clickEvent)
     }>
-        Save Your Routine</button>
-</form></div>
+        Save Your Routine</Button>
+</Form></div>
     )
 
 

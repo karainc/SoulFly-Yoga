@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { addRoutine } from "../Managers/RoutineManager"
 import { getAllPoses } from "../Managers/PoseManager"
+import { Button, Form, FormGroup, Input, Label } from "reactstrap"
+
 
 export const RoutineForm = () => {
     const localSoulFlyUser = localStorage.getItem("users");
@@ -13,11 +15,11 @@ export const RoutineForm = () => {
         getAllPoses().then(allPoses => setPoses(allPoses));
     }
 
-    useEffect(() => {
-        getPoses()
-    }, [])
+        useEffect(() => {
+            getPoses()
+        }, [])
 
-    const [routine, update] = useState({
+    const [newRoutine, updateRoutine] = useState({
         intention: "",
         reflection:"",
         cycles: 0,
@@ -26,104 +28,102 @@ export const RoutineForm = () => {
         creationDate: Date.now(),
         userId: soulFlyUserObject.id
     })
-    
+   
 
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
         console.log("So you like to push buttons?")
 
+        if (newRoutine.poseId === "") {
+            alert("Please select a pose");
+            return;
+        }
+
         const routineToSendToAPI = {
-            Intention: routine.intention,
-            Reflection: routine.reflection,
-            CreationDate: new Date().toISOString,
+            Intention: newRoutine.intention,
+            Reflection: newRoutine.reflection,
+            CreationDate: new Date(),
             Cycles: 0,
-            PoseId: routine.poseId,
+            PoseId: newRoutine.poseId,
             UsersId: soulFlyUserObject.id
         }
 
-        return addRoutine(routineToSendToAPI).then(navigate('/routines'))
-        }
-
-        const selectList = (event) => {
-            const copy = {
-                ...routine
+        addRoutine(routineToSendToAPI).then((routineId) => {
+            if (routineId) {
+                navigate(`/routines/${routineId}`);
             }
-            copy.poseId = event.target.value
-            update(copy)
-        }  
+        });
+    };
         return (
             <div>
-                <form className="routineForm">
+                <Form className="routineForm">
                     <h2 className="routineForm">New Routine</h2>
     
-                    <fieldset>
+                    <FormGroup>
+                    <Label for="poseDropdown">Select Pose:</Label>
+                    <Input
+                        className="routine-input"
+                        type="select"
+                        name="pose"
+                        id="poseDropdown"
+                        value={newRoutine.poseId}
+                        onChange={(event) => {
+                            const copy = { ...newRoutine }
+                            copy.poseId = parseInt(event.target.value)
+                            updateRoutine(copy)
+                        }}
+                    >
+                        <option value="">Select...</option>
+                        {poses.map((poses) => (
+                            <option key={poses.id} value={poses.id}>{poses.name}</option>
+                        ))}
+                    </Input>
+                </FormGroup>
+                    <FormGroup>
                         <div className="form-group">
-                            <label htmlFor="pose-select">Poses</label>
-                            {/* Select poses from the list */}
-                            <select id="type"
+                            <Label htmlFor="intention">Intention</Label>
+                            <Input id="intention" type="text" className="form-control"
                                 value={
-                                    routine.poseId
-                                }
-                                onChange={
-                                    event => selectList(event)
-                            }>
-                                <option value="5">Select your poses</option>
-                                {
-                                poses.map(pose => {
-                                    return <option value={pose.id} key={
-                                        pose.id
-                                    }>
-                                        {
-                                        pose.name
-                                    }</option>
-                            })
-                            } </select>  
-                            </div>
-                    </fieldset>
-                    <fieldset>
-                        <div className="form-group">
-                            <label htmlFor="intention">Intention</label>
-                            <input id="intention" type="text" className="form-control"
-                                value={
-                                    routine.intention
+                                    newRoutine.intention
                                 }
                                 onChange={
                                     (event) => {
                                         const copy = {
-                                            ...routine
+                                            ...newRoutine
                                         }
                                         copy.intention = event.target.value
-                                        update(copy)
+                                        updateRoutine(copy)
                                     }
                                 }/>
                         </div>
-                </fieldset>
-                <fieldset>
+                </FormGroup>
+                <FormGroup>
                     <div className="form-group">
-                        <label htmlFor="cycles">Cycles</label>
-                        <input id="cycle" type="text" className="form-control"
+                        <Label htmlFor="cycles">Cycles</Label>
+                        <Input id="cycle" type="text" className="form-control"
                             value={
-                                routine.cycles
+                                newRoutine.cycles
                             }
                             onChange={
                                 (event) => {
                                     const copy = {
-                                        ...routine
+                                        ...newRoutine
                                     }
                                     copy.cycles = event.target.value
-                                    update(copy)
+                                    updateRoutine(copy)
                                 }
                             }/>
                     </div>
-            </fieldset>
+            </FormGroup>
     
     
-        <button className="btn btn-primary"
+        <Button className="btn btn-primary"
             onClick={
                 (clickEvent) => handleSaveButtonClick(clickEvent)
         }>
-            Save Routine</button>
-    </form></div>
+            Save Routine</Button>
+    </Form>
+    </div>
         )
     
     

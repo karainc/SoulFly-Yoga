@@ -119,15 +119,11 @@ namespace SoulFly.Utils
             }
         }
 
-        internal static object ValueOrDBNull(string imageLocation)
+        internal static object ValueOrDBNull(string image)
         {
             throw new NotImplementedException();
         }
 
-        internal static object ValueOrDBNull(object publishDateTime)
-        {
-            throw new NotImplementedException();
-        }
 
         internal static string GetNullableString(SqlDataReader reader, string v)
         {
