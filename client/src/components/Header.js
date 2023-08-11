@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
-// import { logout } from '../Managers/UserProfileManager';
 import {
   Collapse,
   Navbar,
@@ -10,6 +9,7 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap';
+import { logout } from "./Managers/UsersManager"
 
 export default function Header({isLoggedIn, setIsLoggedIn}) {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,13 +33,13 @@ export default function Header({isLoggedIn, setIsLoggedIn}) {
           <Nav navbar>
             {isLoggedIn &&
               <>
-                {/* <NavItem>
+                <NavItem>
                   <a aria-current="page" className="nav-link"
                     style={{ cursor: "pointer" }} onClick={() => {
                       logout()
                       setIsLoggedIn(false)
                     }}>Logout</a>
-                </NavItem> */}
+                </NavItem>
               <NavItem>
               <NavLink tag={RRNavLink} to="/library">Yoga Library</NavLink>
               </NavItem>

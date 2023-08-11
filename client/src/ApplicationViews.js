@@ -1,10 +1,18 @@
-import { Route, Routes, Router } from "react-router-dom";
-import { YogaCategories } from "./components/YogaCategories";
+import { Route, Routes } from "react-router-dom";
 import React from "react";
 import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register";
-import Authorize from "./components/Authorize";
-import NavBar from "./components/Navbar/NavBar";
+import Hello from "./Hello";
+import { RoutineList } from "./Routines/RoutineList";
+// import PosesList from "./Poses/PosesList";
+
+// import { UserRoutines } from "./Routines/UserRoutines";
+import { RoutineDetails } from "./Routines/RoutineDetails";
+// import { CommentList } from "./Comments/CommentList.js";
+import { RoutineForm } from "./Routines/RoutineForm";
+import { RoutineEdit } from "./Routines/RoutineEdit";
+// import { CommentForm } from "./Comments/CommentForm.js";
+import { YogaPoses } from "./Pages/Library";
+
 
 
 export const ApplicationViews = () => {
@@ -13,22 +21,17 @@ export const ApplicationViews = () => {
     
        
           <Routes>
-         
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-    
-            <Route path="*" element={
-              <Authorize>
-                <>
-                  <NavBar />
-                  <div className="content-container">
-                        <div className="content-container">
-                    <ApplicationViews />  
-                  </div>
-                    </div>
-              </>
-              </Authorize>
-            } />
+        <Route path="/" element={<Hello />} />
+        <Route path="/routines" element={<RoutineList />} />
+        <Route path="/routines/:id" element={<RoutineDetails />} />
+        <Route path="/routines/add" element={<RoutineForm />} />
+        <Route path="/routines/edit/:routineId" element={<RoutineEdit />} />
+        {/* <Route path="/myRoutines" element={<UserRoutines />} /> */}
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/poses" element={<PoseList />} /> */}
+        <Route path="/library" element={<YogaPoses />} />
+
+          
           </Routes>
 
         );

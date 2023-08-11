@@ -1,6 +1,4 @@
 using server_yoga.Repositories;
-using server_yogaRepositories;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace server_yoga
 {
@@ -15,11 +13,9 @@ namespace server_yoga
             // Add services to the container.
 
             builder.Services.AddControllers();
-            builder.Services.AddTransient<ICommentRepository, CommentRepository>();
+           
             builder.Services.AddTransient<IRoutineRepository, RoutineRepository>();
-            builder.Services.AddTransient<IPosesRepository, PosesRepository>();
-            builder.Services.AddTransient<IRoutinePosesRepository, RoutinePosesRepository>();
-
+           
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

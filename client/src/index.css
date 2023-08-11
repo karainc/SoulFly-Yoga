@@ -1,9 +1,9 @@
 .body {
-  background-image: url('./img/bgsoul.png');
+ background-color: rgb(151, 230, 152);
   min-height: 100vh;
   max-height: 999px;
   padding: 0;
-  color: #fff;
+  color: #95f5a6;
   
   overflow: hidden;
   position: absolute;
