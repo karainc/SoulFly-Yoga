@@ -1,6 +1,8 @@
 ﻿using SoulFly.Models;
 using SoulFly.Utils;
 using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace SoulFly.Repositories
 {
@@ -17,10 +19,11 @@ namespace SoulFly.Repositories
                 {
 
                     cmd.CommandText = @"
-                        SELECT u.Id, u.DisplayName, u.Birthday, u.Password, 
-                               u.Email 
+                        SELECT Id, [DisplayName], Birthday, Password, 
+                               Email 
                              
-                        FROM Users u";
+                        FROM [Users]
+                        ORDER BY [DisplayName] ASC";
 
 
                     var reader = cmd.ExecuteReader();
@@ -32,10 +35,10 @@ namespace SoulFly.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
                             DisplayName = DbUtils.GetString(reader, "DisplayName"),
-                            Birthday = DbUtils.GetString(reader, "Birthday"),
-                            Password = DbUtils.GetString(reader, "Password"),
                             Email = DbUtils.GetString(reader, "Email"),
-                         
+                            Password = DbUtils.GetString(reader, "Password"),
+                            Birthday = DbUtils.GetString(reader, "Birthday")
+
                         });
                     }
 
@@ -56,12 +59,12 @@ namespace SoulFly.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT u.Id, u.DisplayName, u.Birthday, u.Password, 
-                               u.Email
+                        SELECT Id, [DisplayName], Birthday, Password, 
+                               Email
                              
-                        FROM Users u
+                        FROM [Users]
                       
-                        WHERE u.Id = @Id";
+                        WHERE Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -73,9 +76,9 @@ namespace SoulFly.Repositories
                             {
                                 Id = DbUtils.GetInt(reader, "Id"),
                                 DisplayName = DbUtils.GetString(reader, "DisplayName"),
-                                Birthday = DbUtils.GetString(reader, "Birthday"),
-                                Password = DbUtils.GetString(reader, "Password"),
                                 Email = DbUtils.GetString(reader, "Email"),
+                                Password = DbUtils.GetString(reader, "Password"),
+                                Birthday = DbUtils.GetString(reader, "Birthday")
 
                             };
                         }
@@ -121,9 +124,9 @@ namespace SoulFly.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT u.Id, u.DisplayName, 
-                               u.Email, u.Password, u.Birthday
-                         FROM Users u
+                        SELECT Id, DisplayName, 
+                               Email, Password, Birthday
+                         FROM [Users]
                          WHERE Email = @email";
 
                     DbUtils.AddParameter(cmd, "@email", email);
@@ -156,14 +159,15 @@ namespace SoulFly.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Users (Password, DisplayName, 
-                                                                 Email, Birthday)
-                                        OUTPUT INSERTED.ID
-                                        VALUES (@Password, @DisplayName, 
-                                                @Email, @Birthday)";
-                    DbUtils.AddParameter(cmd, "@Password", users.Password);
+                    cmd.CommandText = @"
+                                      INSERT INTO [Users] ([DisplayName], Email, 
+                                                  Password, Birthday)
+                                      OUTPUT INSERTED.ID
+                                      VALUES (@DisplayName, @Email, @Password, @Birthday)";
+
                     DbUtils.AddParameter(cmd, "@DisplayName", users.DisplayName);
                     DbUtils.AddParameter(cmd, "@Email", users.Email);
+                    DbUtils.AddParameter(cmd, "@Password", users.Password);
                     DbUtils.AddParameter(cmd, "@Birthday", users.Birthday);
 
                     users.Id = (int)cmd.ExecuteScalar();

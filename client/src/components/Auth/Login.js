@@ -13,7 +13,7 @@ export default function Login({setIsLoggedIn}) {
 
   const loginSubmit = (e) => {
     e.preventDefault();
-    login({email})
+    login({email, password})
       .then(r =>{
       if(r){
       setIsLoggedIn(true)
@@ -27,6 +27,10 @@ export default function Login({setIsLoggedIn}) {
   return (
     <Form className="login-form" onSubmit={loginSubmit}>
       <fieldset>
+        Welcome Back to SoulFly Yoga!
+        <p></p>
+        Please Sign In...
+        <p></p>
         <FormGroup>
           <Label for="email">Email</Label>
           <Input id="email" type="text" onChange={e => setEmail(e.target.value)} />

@@ -24,7 +24,7 @@ namespace SoulFly.Controllers
         }
         // GET: api/<RoutineController>
         [HttpGet("GetUsersRoutines/{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetByUserId(int id)
         {
             List<Routine> routines = _routineRepo.GetRoutinesByUserId(id);
             if (routines == null)
