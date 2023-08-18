@@ -38,13 +38,13 @@ namespace SoulFly.Controllers
         [HttpGet("GetByEmail")]
         public IActionResult GetByEmail(string email)
         {
-            var user = _usersRepository.GetByEmail(email);
+            var users = _usersRepository.GetByEmail(email);
 
-            if ( user == null)
+            if ( email == null || users == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(users);
         }
 
         [HttpPost]
@@ -52,8 +52,8 @@ namespace SoulFly.Controllers
         {
             _usersRepository.Add(users);
             return CreatedAtAction(
-                "GetByEmail",
-                new { email = users.Email },
+                "Get",
+                new { id = users.Id },
                 users);
         }
         [HttpPut("{id}")]

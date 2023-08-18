@@ -13,7 +13,9 @@ namespace SoulFly.Models
         public DateTime? CreationDate { get; set; }
         public string? Reflection { get; set; }
         public Poses? Poses { get; set; }
-        public int? UsersId { get; set; }
         public Users? Users { get; set; }
+
+
+       
     }
 }

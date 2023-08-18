@@ -18,7 +18,7 @@ export const login = (userObject) => {
         localStorage.clear()
   };
   
-  export const register = (userObject, password) => {
+  export const register = (userObject) => {
     return  fetch(`${apiUrl}/api/Users`, {
       method: "POST",
       headers: {

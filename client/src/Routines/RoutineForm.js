@@ -7,9 +7,9 @@ import { Button, Form, FormGroup, Input, Label } from "reactstrap"
 
 export const RoutineForm = () => {
     const localSoulFlyUser = localStorage.getItem("users");
-    const soulFlyUserObject = JSON.parse(localSoulFlyUser)
-    const [poses, setPoses] = useState([])
-    const navigate = useNavigate()
+    const soulFlyUserObject = JSON.parse(localSoulFlyUser);
+    const [poses, setPoses] = useState([]);
+    const navigate = useNavigate();
 
     const getPoses = () => {
         getAllPoses().then(allPoses => setPoses(allPoses));
@@ -21,7 +21,6 @@ export const RoutineForm = () => {
 
     const [newRoutine, updateRoutine] = useState({
         intention: "",
-        reflection:"",
         cycles: 0,
         poseId: "",
         reflection: "",
@@ -43,14 +42,15 @@ export const RoutineForm = () => {
             Intention: newRoutine.intention,
             Reflection: newRoutine.reflection,
             CreationDate: new Date(),
-            Cycles: 0,
+            Cycles: newRoutine.cycles,
             PoseId: newRoutine.poseId,
-            UsersId: soulFlyUserObject.id
+            UserId: soulFlyUserObject.id
         }
 
         addRoutine(routineToSendToAPI).then((routineId) => {
             if (routineId) {
-                navigate(`/routines/${routineId}`);
+                console.log(routineId)
+                navigate(`/routines/`);
             }
         });
     };

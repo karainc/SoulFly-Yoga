@@ -64,3 +64,5 @@ C:\Users\karal\workspace\capstone\soulfly-yoga\SoulFly\SoulFly\obj\Debug\net6.0\
 C:\Users\karal\workspace\capstone\soulfly-yoga\SoulFly\SoulFly\obj\Debug\net6.0\SoulFly.pdb
 C:\Users\karal\workspace\capstone\soulfly-yoga\SoulFly\SoulFly\obj\Debug\net6.0\SoulFly.genruntimeconfig.cache
 C:\Users\karal\workspace\capstone\soulfly-yoga\SoulFly\SoulFly\obj\Debug\net6.0\ref\SoulFly.dll
+C:\Users\karal\workspace\capstone\soulfly-yoga\SoulFly\SoulFly\bin\Debug\net6.0\Microsoft.Exchange.WebServices.Auth.dll
+C:\Users\karal\workspace\capstone\soulfly-yoga\SoulFly\SoulFly\bin\Debug\net6.0\Microsoft.Exchange.WebServices.dll
