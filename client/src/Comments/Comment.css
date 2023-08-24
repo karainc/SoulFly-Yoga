@@ -1,0 +1,25 @@
+.comment-title {
+    text-transform: capitalize;
+    font-size: 2rem;
+}
+.comment-card {
+    margin-bottom: 5px;
+}
+.comment-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.comment-form {
+    margin: 0 auto;
+    max-width: 400px;
+  }
+
+.comment-input {
+    padding: 10px;
+}
+
+.comment-btn {
+    margin: 3px;
+}

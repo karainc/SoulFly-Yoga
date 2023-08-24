@@ -1,18 +1,23 @@
 body {
-  margin: 0;
+
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url(https://wallpaperaccess.com/full/1191338.jpg);
-  background-color: rgb(229, 145, 240);
+  background-color: 'transparent';
+}
+
+.poses-container{
+  background-color: transparent;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-    background-color: rgb(229, 145, 240);
+    background-color: 'transparent';
 }
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap');
 
@@ -20,8 +25,65 @@ code {
 .bg-navbar-background {
     background: #d8a6f1;
 }
+.card {
+  margin: auto;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px;
+  width: auto;
+}
+.card-text {
+  font-size: small;
+
+}
+.overlay-title{
+  text-align: left;
+  font-size: 100px;
+  font: blue;
+
+
+}
+.deeper{
+  font-size: 30px;
+}
+
+.card-img {
+  width: 100px;
+  height: 200px;
+  justify-content: space-around;
+}
+.carousel-container{
+  width: 75%;
+  padding-left: 200px;
+  padding-top: 70px;
+  align-items: center;
+  position: relative;
+}
+.routine-form-container {
+
+  width: 50%;
+ padding-left: 20px;
+ color: #f1eef4;
+  
+}
+.routine-btn btn-primary{
+  background-color: #41c0fb;
+}
+
+routine-edit-form{
+  width: 60px;
+}
+.routine-list{
+  width: 50%;
+  padding-left: 80px;
+  padding-top: 30px;
+}
 .container {
-  background-color:  rgb(229, 145, 240);
+  background-color: 'transparent';
+  color: #f1eef4;
+}
+.table {
+  width: 50%;
 }
 
 .register-form {

@@ -68,13 +68,13 @@ export const RoutineEdit = () => {
     }
 
     return (
-        <div>
-            <Form className="routineForm">
+        <div className="routine-form-container">
+            <Form className="routine-edit-form">
                 <h2 className="routineForm">New Routine</h2>
 
                 <FormGroup>
-                    <div className="form-group">
-                        <Label htmlFor="pose-select">Pose</Label>
+                    <div className="form-group-pose-select">
+                        <Label htmlFor="pose-select">Your Pose</Label><p></p>
                         <select id="type"
                             required
                             value={
@@ -83,7 +83,7 @@ export const RoutineEdit = () => {
                             onChange={
                                 event => selectList(event)
                         }>
-                            <option value="0">Select your poses</option>
+                            <option value="">Select your poses</option>
                             {
                             poses.map(pose => {
                                 return <option value={pose.id} key={
@@ -92,6 +92,7 @@ export const RoutineEdit = () => {
                                     {
                                     pose.name
                                 }</option>
+                                
                         })
                         } </select>  
                         </div>

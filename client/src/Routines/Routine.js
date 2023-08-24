@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export const Routine = ({ routine }) => {
     console.log(routine)
   return (
+    
       <tbody>
         <tr>
           <td> {routine.intention}</td>

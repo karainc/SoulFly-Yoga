@@ -1,28 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { getPoses } from '../Managers/ApiManager';
-
+import { getAllPoses } from '../Managers/ApiManager';
+import { Card, Col, Row, Container, CardBody, CardImg, CardImgOverlay, CardTitle, CardText, } from 'reactstrap';
+import { Poses } from '../Pages/LibraryCard';
 
 export const YogaPoses = () => {
   const [poses, setPoses] = useState([]);
+  // const navigate = useNavigate();
+
+  const getPoses = () => {
+    getAllPoses().then(allPoses => setPoses(allPoses));
+  };
 
   
-
-  
-  useEffect( 
-    () => {
-    getPoses()
-    .then((posesArray) => setPoses(posesArray))  
-    }, []
-  )
-
-
+  useEffect(() => {
+      getPoses();
+    }, []);
+    
     return(
-        <>
-            {poses.map((pose) => (
-                <div className="inner-pose" key={pose.id}>
-                <h3 className="pose-name">{poses.poses_name}</h3>
-                  </div>  
-            ))}
-      </>
-    ) 
-}
+        <><>
+       <p></p>
+          <Card inverse>
+        <CardImg
+          alt="Card image cap"
+          src="https://picsum.photos/id/82/600/170"
+          style={{
+            height: 200
+          }}
+          width="80%" />
+        <CardImgOverlay>
+          <CardTitle className="overlay-title" tag="h1">
+            Yoga Library
+          </CardTitle>
+          <CardText className='deeper'>
+            Your resource for a more in depth exploration into poses!
+          </CardText>
+        </CardImgOverlay>
+      </Card>
+      </><>
+          <Container className="pose-container">
+            <Row sm="3">
+              {poses.map((pose) => {
+                return <Col><Poses key={poses.id} poses={pose} /></Col>;
+              })}
+            </Row>
+          </Container>
+        </></>
+        );
+        };
+

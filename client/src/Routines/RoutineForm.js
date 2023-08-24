@@ -60,7 +60,7 @@ export const RoutineForm = () => {
                     <h2 className="routineForm">New Routine</h2>
     
                     <FormGroup>
-                    <Label for="poseDropdown">Select Pose:</Label>
+                    <Label for="poseDropdown">Select a Pose:</Label>
                     <Input
                         className="routine-input"
                         type="select"

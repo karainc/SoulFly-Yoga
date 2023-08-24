@@ -4,6 +4,7 @@ import { Routine } from "./Routine";
 import { Table, Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
+
 export const RoutineList = () => {
     const [routines, setRoutines] = useState([]);
     const navigate = useNavigate()
@@ -17,17 +18,18 @@ export const RoutineList = () => {
     }, [])
 
     return (<>
+      <div className="routine-list">
+        <div className="row justify-content-center">
      <Button
             onClick={() => navigate("/routines/add")}
             
             
-            className="btn btn-primary">
+            className="routine-btn btn-primary">
                 Create Routine
             </Button>
-      <div className="routine-list">
-        <div className="row justify-content-center">
-          <div className="cards-column">
-            <Table> 
+            <p></p>
+      
+            <Table dark> 
             <thead>
               <tr>
                 <th>Intention</th>
@@ -44,7 +46,7 @@ export const RoutineList = () => {
             </Table>
           </div>
         </div>
-      </div>
+
     
     </>
     )

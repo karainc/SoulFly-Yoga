@@ -8,10 +8,10 @@
     color: #f6f2f2; 
 }
 .cards-column {
-    background-color: rgb(229, 145, 240);
+    background-color: 'transparent';
 }
 .container {
-    background-color:  rgb(229, 145, 240);
+    background-color: 'transparent';
 }
 /* .register-form {
     border: #000000;

@@ -6,7 +6,9 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from "./components/Header";
 import './index.css';
-
+// import Goals from "../goals/Goals"
+import RingLoader from "react-spinners/RingLoader";
+import { UncontrolledCarousel } from "reactstrap";
 
 
 const App=() => {
@@ -22,14 +24,18 @@ const App=() => {
     }, [isLoggedIn])
 
     return (
-      <Router>
-          <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-          {isLoggedIn ?
-              <ApplicationViews />
-              :
-              <Authorize setIsLoggedIn={setIsLoggedIn} />
-          }
-      </Router>
+        <>
+        <Router>
+            <RingLoader color="#36d7b7" type="grow" 
+                children={false} />
+               
+                <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                
+                    {isLoggedIn ?
+                    <ApplicationViews />
+                    :
+                    <Authorize setIsLoggedIn={setIsLoggedIn} />}
+            </Router></>
   );
 }
 export default App;
