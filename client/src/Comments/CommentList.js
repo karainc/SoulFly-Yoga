@@ -25,7 +25,7 @@ export const CommentList = () => {
 
     useEffect(() => {
         getComments(id);
-    }, [])
+    }, [id])
 
     const getRoutine = (id) => {
         getRoutineById(id)
@@ -43,7 +43,7 @@ export const CommentList = () => {
             <Container>
 
                 <Link to={`/routines/${id}`}>
-                    <strong className="comment-intention">{routine.intention}</strong>
+                    <strong className="routine-intention">{routine.intention}</strong>
                 </Link>
             
                 <Row className="comment-row">

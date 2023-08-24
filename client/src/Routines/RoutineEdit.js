@@ -50,7 +50,7 @@ export const RoutineEdit = () => {
         }
 
         if (routineToEdit.PoseId < 0) {
-        return window.alert("There is no routine without a pose!")}
+        return window.alert("There is no yoga without a pose!")}
         else{
             return updateRoutine(routineToEdit)
             .then(() => {
@@ -70,7 +70,7 @@ export const RoutineEdit = () => {
     return (
         <div className="routine-form-container">
             <Form className="routine-edit-form">
-                <h2 className="routineForm">New Routine</h2>
+                <h2 className="routineForm">New Session</h2>
 
                 <FormGroup>
                     <div className="form-group-pose-select">
@@ -135,11 +135,11 @@ export const RoutineEdit = () => {
         </FormGroup>
 
 
-    <Button className="btn btn-primary"
+    <Button className="save-routine-buttons"
         onClick={
             (clickEvent) => handleSaveButtonClick(clickEvent)
     }>
-        Save Your Routine</Button>
+        Save Your Session</Button>
 </Form></div>
     )
 

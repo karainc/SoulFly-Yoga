@@ -19,18 +19,19 @@ export const YogaPoses = () => {
     return(
         <><>
        <p></p>
-          <Card inverse>
+          <Card className='overlay' inverse>
         <CardImg
           alt="Card image cap"
           src="https://picsum.photos/id/82/600/170"
           style={{
-            height: 200
+            height: 150
           }}
           width="80%" />
         <CardImgOverlay>
           <CardTitle className="overlay-title" tag="h1">
             Yoga Library
           </CardTitle>
+          <p></p>
           <CardText className='deeper'>
             Your resource for a more in depth exploration into poses!
           </CardText>

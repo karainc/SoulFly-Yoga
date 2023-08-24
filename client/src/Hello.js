@@ -15,7 +15,8 @@ export default function Hello() {
       color: "white",
     }}>Welcome to SoulFly Yoga</span>
     <p></p>
-    We are passionate about creating a space for mental, emotional, and physical healing through yoga. Yoga can be a method to heal ones body and mind simultaneously. However, there is no one-size-fits-all approach to yoga, and what works for one person may not work for another. Create your own yoga routines based on your individual needs and goals. Then view routines being practiced by other SoulFly Yoga users like you!
+    We are passionate about creating a space for mental, emotional, and physical healing through yoga. Yoga can be a method to heal ones body and mind simultaneously. However, there is no one-size-fits-all approach to yoga, and what works for one person may not work for another. Create your own yoga sessions based on your individual needs and goals. Then view sessions being practiced by other SoulFly Yoga users like you!
 </Container>
+
   );
 }

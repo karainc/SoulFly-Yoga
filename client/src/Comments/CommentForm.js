@@ -13,17 +13,12 @@ export const CommentForm = () => {
     const localSoulFlyUser = localStorage.getItem("users")
     const soulFlyUserObject = JSON.parse(localSoulFlyUser)
     const navigate = useNavigate();
-    const currentDate = new Date();
-    const offset = currentDate.getTimezoneOffset();
-    const timezoneOffset = offset * 60 * 1000;
-    const correctedDate = new Date(currentDate.getTime() - timezoneOffset)
 
     const [newComment, updateComment] = useState({
         RoutineId: routineId,
         UsersId: soulFlyUserObject.id,
-        text: "",
-
-        CreateDateTime: correctedDate.toISOString()
+        Text: "",
+        CreateDateTime: Date.now(),
     })
 
     const handleSaveButtonClick = (e) => {
@@ -33,7 +28,7 @@ export const CommentForm = () => {
             RoutineId: routineId,
             UsersId: soulFlyUserObject.id,
             Text: newComment.text,
-            CreateDateTime: correctedDate.toISOString()
+            CreateDateTime: Date.now(),
         }
 
         console.log(routineId)
@@ -52,7 +47,7 @@ export const CommentForm = () => {
         <h2 className="comment-form-title">Create a New Comment</h2>
 
             <FormGroup className="form-group">
-                <Label htmlFor="text">text:</Label>
+                <Label htmlFor="text">What would you like to say?</Label>
                 <Input
                     className="comment-input"
                     type="text"

@@ -56,7 +56,7 @@ export const RoutineForm = () => {
     };
         return (
             <div>
-                <Form className="routineForm">
+                <Form className="routine-form">
                     <h2 className="routineForm">New Routine</h2>
     
                     <FormGroup>
@@ -117,7 +117,7 @@ export const RoutineForm = () => {
             </FormGroup>
     
     
-        <Button className="btn btn-primary"
+        <Button className="save-routine-button"
             onClick={
                 (clickEvent) => handleSaveButtonClick(clickEvent)
         }>

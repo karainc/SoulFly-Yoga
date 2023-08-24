@@ -35,7 +35,7 @@ export const RoutineDetails = () => {
   const deleteRoutineAlert = () => {
     return (<>
     <Alert color="danger" key={'danger'}>
-      You really want to delete this routine?
+      You really want to delete this session?
       <br></br><Link onClick={handleDelete}>Yes</Link> / <Link onClick={handleCancel}>No</Link>
     </Alert>
     </>)
@@ -53,6 +53,8 @@ export const RoutineDetails = () => {
       Delete
     </Button>
       {showAlert && deleteRoutineAlert()}
+      <p></p>
+      <p></p>
       </>
     }
   }
@@ -67,8 +69,8 @@ export const RoutineDetails = () => {
 
   return (
     <div className="card-container">
-    <Card style={{ width: '700px', height: 'auto', margin: '10px'}}>
-        <CardTitle><b>The intention of this routine is to:  {routine.intention}</b></CardTitle>
+    <Card style={{ width: '600px', height: 'auto', margin: '30px'}}>
+        <CardTitle><b>The intention of this session is to:  {routine.intention}</b></CardTitle>
         <CardBody>
             <CardText>Number of Cycles:  {routine?.cycles}</CardText>
             <CardText>Name of Pose: {routine?.poses?.name}</CardText>
